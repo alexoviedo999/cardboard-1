@@ -75,7 +75,7 @@
       });
 
       cubeGroup = new THREE.Object3D;
-      cubeGroup.position.x = 50;
+      cubeGroup.position.x = 40;
 
       // Plane
       var geometry = new THREE.PlaneGeometry(1000, 1000);
@@ -105,7 +105,7 @@
       var sphereGeometry = new THREE.SphereGeometry(1, 20, 20);
       var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
       sphere.position.x = 35;
-      sphere.position.y = 23;
+      sphere.position.y = 30;
       sphere.position.z = 0;
       sphere.castShadow = true;
       sphere.receiveShadow = true;
@@ -134,6 +134,7 @@
 
     function rotateScene(deltax) {
       cubeGroup.rotation.y += 3 / 100;
+      cube.rotation.y += 3 / 100;
       // cubeGroup.scale.set(4, 4, 4);
     }
 
