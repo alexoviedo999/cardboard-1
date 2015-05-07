@@ -11,6 +11,8 @@
 
     function init() {
       renderer = new THREE.WebGLRenderer();
+      renderer.shadowMapEnabled = true;
+      renderer.shadowMapType = THREE.PCFSoftShadowMap;
       element = renderer.domElement;
       container = document.getElementById('example');
       container.appendChild(element);
@@ -20,7 +22,7 @@
       scene = new THREE.Scene();
 
       camera = new THREE.PerspectiveCamera(90, 1, 0.001, 700);
-      camera.position.set(0, 10, 0);
+      camera.position.set(0, 30, 0);
       scene.add(camera);
 
       controls = new THREE.OrbitControls(camera, element);
@@ -73,11 +75,15 @@
       });
 
       cubeGroup = new THREE.Object3D;
+      cubeGroup.position.x = 50;
 
       // Plane
       var geometry = new THREE.PlaneGeometry(1000, 1000);
       var mesh = new THREE.Mesh(geometry, material);
       mesh.rotation.x = -Math.PI / 2;
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      
       // cubeGroup.add(mesh);
 
       // Cube
@@ -85,10 +91,12 @@
       var cubeMaterial = new THREE.MeshPhongMaterial({ map: cubeTexture });
       var geometry = new THREE.BoxGeometry(10, 10, 10);
       cube = new THREE.Mesh(geometry, cubeMaterial);
-      cube.position.z = 5;
-      cube.position.y = 10;
+      cube.position.z = 0;
+      cube.position.y = 15;
       cube.position.x = 30;
-      cube.rotation.y = Math.PI / 5;
+      cube.rotation.y = Math.PI / 2;
+      cube.castShadow = true;
+      cube.receiveShadow = true;
       cubeGroup.add(cube);
 
       // Sphere
@@ -96,10 +104,25 @@
       var sphereMaterial = new THREE.MeshPhongMaterial({ map: sphereTexture});
       var sphereGeometry = new THREE.SphereGeometry(1, 20, 20);
       var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-      sphere.position.x = 20;
-      sphere.position.y = 5;
+      sphere.position.x = 35;
+      sphere.position.y = 23;
+      sphere.position.z = 0;
+      sphere.castShadow = true;
+      sphere.receiveShadow = true;
       cubeGroup.add(sphere);
 
+      //lights
+      var spotLight = new THREE.SpotLight(0xffffff, 0.1);
+      spotLight.position.set(-100, 100, 0);
+      spotLight.castShadow = true;
+      spotLight.shadowCameraNear = 1;
+      spotLight.shadowCameraVisible = false;
+      spotLight.shadowCameraFar = 300;
+      spotLight.shadowCameraFov = 45;
+      spotLight.shadowDarkness = 0.6;
+      spotLight.shadowMapWidth = 512;
+      spotLight.shadowMapHeight = 512;
+      scene.add(spotLight);
 
 
       window.addEventListener('resize', resize, false);
@@ -110,8 +133,8 @@
     }
 
     function rotateScene(deltax) {
-      cubeGroup.rotation.y += 4 / 100;
-      // $("#rotation").html("rotation: 0," + cubeGroup.rotation.y.toFixed(2) + ",0");
+      cubeGroup.rotation.y += 3 / 100;
+      // cubeGroup.scale.set(4, 4, 4);
     }
 
 
@@ -147,14 +170,7 @@
 
       update(clock.getDelta());
       render(clock.getDelta());
-
       rotateScene();
-      // var now = Date.now();
-      // var deltat = now - currentTime;
-      // currentTime = now;
-      // var fract = deltat / duration;
-      // var angle = Math.PI * 2 * fract;
-      // cubeGroup.rotation.y += angle;
     }
 
     function fullscreen() {
