@@ -74,15 +74,15 @@
 
       cubeGroup = new THREE.Object3D;
 
+      // Plane
       var geometry = new THREE.PlaneGeometry(1000, 1000);
-
       var mesh = new THREE.Mesh(geometry, material);
       mesh.rotation.x = -Math.PI / 2;
-      cubeGroup.add(mesh);
+      // cubeGroup.add(mesh);
 
+      // Cube
       var cubeTexture = THREE.ImageUtils.loadTexture("textures/patterns/9452.jpg");
       var cubeMaterial = new THREE.MeshPhongMaterial({ map: cubeTexture });
-
       var geometry = new THREE.BoxGeometry(10, 10, 10);
       cube = new THREE.Mesh(geometry, cubeMaterial);
       cube.position.z = 5;
@@ -91,10 +91,27 @@
       cube.rotation.y = Math.PI / 5;
       cubeGroup.add(cube);
 
+      // Sphere
+      var sphereTexture = THREE.ImageUtils.loadTexture("textures/patterns/9452.jpg");
+      var sphereMaterial = new THREE.MeshPhongMaterial({ map: sphereTexture});
+      var sphereGeometry = new THREE.SphereGeometry(1, 20, 20);
+      var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+      sphere.position.x = 20;
+      sphere.position.y = 5;
+      cubeGroup.add(sphere);
+
+
+
       window.addEventListener('resize', resize, false);
       setTimeout(resize, 1);
 
+      scene.add(mesh);
       scene.add(cubeGroup);
+    }
+
+    function rotateScene(deltax) {
+      cubeGroup.rotation.y += 4 / 100;
+      // $("#rotation").html("rotation: 0," + cubeGroup.rotation.y.toFixed(2) + ",0");
     }
 
 
@@ -122,11 +139,22 @@
       effect.render(scene, camera);
     }
 
+    var duration = 5000; // ms
+    var currentTime = Date.now();
+
     function animate(t) {
       requestAnimationFrame(animate);
 
       update(clock.getDelta());
       render(clock.getDelta());
+
+      rotateScene();
+      // var now = Date.now();
+      // var deltat = now - currentTime;
+      // currentTime = now;
+      // var fract = deltat / duration;
+      // var angle = Math.PI * 2 * fract;
+      // cubeGroup.rotation.y += angle;
     }
 
     function fullscreen() {
