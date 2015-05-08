@@ -22,7 +22,7 @@
       scene = new THREE.Scene();
 
       camera = new THREE.PerspectiveCamera(90, 1, 0.001, 700);
-      camera.position.set(0, 30, 0);
+      camera.position.set(0, 20, 0);
       scene.add(camera);
 
       controls = new THREE.OrbitControls(camera, element);
