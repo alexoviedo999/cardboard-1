@@ -109,7 +109,7 @@
       sphere.position.z = 0;
       sphere.castShadow = true;
       sphere.receiveShadow = true;
-      cubeGroup.add(sphere);
+      // cubeGroup.add(sphere);
 
       //lights
       var spotLight = new THREE.SpotLight(0xffffff, 0.1);
