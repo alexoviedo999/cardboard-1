@@ -93,6 +93,25 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
         //
 
+        function setOrientationControls(e) {
+          if (!e.alpha) {
+            return;
+          }
+
+          controls = new THREE.DeviceOrientationControls(camera, true);
+          controls.connect();
+          controls.update();
+
+          element.addEventListener('click', fullscreen, false);
+
+          window.removeEventListener('deviceorientation', setOrientationControls, true);
+        }
+
+
+        window.addEventListener('deviceorientation', setOrientationControls, true);
+
+
+
         window.addEventListener( 'resize', onWindowResize, false );
 
       }
