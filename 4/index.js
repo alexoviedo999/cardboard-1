@@ -203,7 +203,7 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
           cube.position.x = 5000 * Math.cos( timer + i );
           cube.position.y = 5000 * Math.sin( timer + i * 1.1 );
 
-          cube.rotation.y += varControl.rotationSpeed;
+          // cube.rotation.y += varControl.rotationSpeed;
           // cube.scale.set(varControl.scale, varControl.scale, varControl.scale);
         }
 
