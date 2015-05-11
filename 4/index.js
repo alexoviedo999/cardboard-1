@@ -20,7 +20,7 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
       
 
       init();
-      animate();
+      // animate();
 
       function init() {
 
@@ -143,6 +143,8 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
         window.addEventListener('deviceorientation', setOrientationControls, true);
         window.addEventListener( 'resize', onWindowResize, false );
+
+        render();
       }
 
       function setOrientationControls( event ) {
@@ -179,14 +181,14 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         mouseY = ( event.clientY - windowHalfY ) * 10;
       }
 
-      function animate() {
-        requestAnimationFrame( animate );
-        render();
-      }
+      // function animate() {
+      //   requestAnimationFrame( animate );
+      //   render();
+      // }
 
-      function render() {
-        camera.updateProjectionMatrix();
-        controls.update();
+      function render(dt) {
+        camera.updateProjectionMatrix(dt);
+        controls.update(dt);
 
         var timer = 0.0001 * Date.now();
 
@@ -212,5 +214,7 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         else {
           renderer.render( scene, camera );
         }
+
+        requestAnimationFrame( render );
 
       }
