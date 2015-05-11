@@ -2,7 +2,7 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
       var container;
 
-      var camera, scene, renderer, effect;
+      var camera, scene, renderer, effect, element;
 
       var mesh, lightMesh, geometry;
       var spheres = [];
@@ -14,8 +14,8 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
       var windowHalfX = window.innerWidth / 2;
       var windowHalfY = window.innerHeight / 2;
 
-      // document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-      window.addEventListener('deviceorientation', setOrientationControls, true);
+      document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+      
 
       init();
       animate();
@@ -85,8 +85,9 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         //
 
         renderer = new THREE.WebGLRenderer();
+        element = renderer.domElement;
         // renderer.setPixelRatio( window.devicePixelRatio );
-        container.appendChild( renderer.domElement );
+        container.appendChild( element );
 
         effect = new THREE.StereoEffect( renderer );
         effect.eyeSeparation = 10;
@@ -94,14 +95,19 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
         //
 
+        controls = new THREE.OrbitControls(camera, element);
+        controls.rotateUp(Math.PI / 4);
+        controls.target.set(
+          camera.position.x + 0.1,
+          camera.position.y,
+          camera.position.z
+        );
+        controls.noZoom = true;
+        controls.noPan = true;
 
-
-      window.addEventListener( 'resize', onWindowResize, false );
-
-      }
-
-      function setOrientationControls(e) {
-        if (!e.alpha) {
+        
+      function setOrientationControls( event ) {
+        if (!event.alpha) {
           return;
         }
 
@@ -109,10 +115,18 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         controls.connect();
         controls.update();
 
-        element.addEventListener('click', fullscreen, false);
+        // element.addEventListener('click', fullscreen, false);
 
         window.removeEventListener('deviceorientation', setOrientationControls, true);
       }
+
+      window.addEventListener('deviceorientation', setOrientationControls, true);
+
+      window.addEventListener( 'resize', onWindowResize, false );
+
+      }
+
+      
 
       function onWindowResize() {
 
@@ -147,9 +161,9 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
         var timer = 0.0001 * Date.now();
 
-        camera.position.x += ( mouseX - camera.position.x ) * .05;
-        camera.position.y += ( - mouseY - camera.position.y ) * .05;
-        camera.lookAt( scene.position );
+        // camera.position.x += ( mouseX - camera.position.x ) * .05;
+        // camera.position.y += ( - mouseY - camera.position.y ) * .05;
+        // camera.lookAt( scene.position );
 
         for ( var i = 0, il = spheres.length; i < il; i ++ ) {
 
