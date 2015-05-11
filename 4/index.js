@@ -51,8 +51,8 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         // ];
 
         var urls = [
-        '../images/TropicalSunnyDay/right.png',
         '../images/TropicalSunnyDay/left.png',
+        '../images/TropicalSunnyDay/right.png',
         '../images/TropicalSunnyDay/top.png',
         '../images/TropicalSunnyDay/bottom.png',
         '../images/TropicalSunnyDay/front.png',
@@ -94,16 +94,6 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
           cubes.push( mesh );
 
         }
-
-
-
-
-        // octahedron
-  // var shape = THREE.SceneUtils.createMultiMaterialObject( 
-  //   new THREE.OctahedronGeometry( 40, 0 ), 
-  //   multiMaterial );
-  // shape.position.set(0, 50, 100);
-  // scene.add( shape );
 
         // Skybox
 
