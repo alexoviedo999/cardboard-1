@@ -1,6 +1,6 @@
 if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-      var container;
+      var container, stereoStatus;
 
       var camera, scene, renderer, effect, element;
 
@@ -23,7 +23,15 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
       function init() {
 
         container = document.createElement( 'div' );
+        container.id = 'container';
         document.body.appendChild( container );
+        var stereoButton = document.createElement('button');
+        stereoButton.id = 'steroButton';
+        stereoButton.textContent = "VR Mode";
+        stereoButton.addEventListener('click', stereoToggle)
+        container.appendChild(stereoButton);
+        stereoStatus = true;
+
 
         camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 100000 );
         camera.position.z = 3200;
@@ -116,10 +124,17 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
         // element.addEventListener('click', fullscreen, false);
 
-        // window.removeEventListener('deviceorientation', setOrientationControls, true);
+        window.removeEventListener('deviceorientation', setOrientationControls, true);
       }
 
-      
+      function stereoToggle() {
+        stereoStatus = !stereoStatus;
+        windowHalfX = window.innerWidth,
+        windowHalfY = window.innerHeight,
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        effect.setSize( window.innerWidth, window.innerHeight );
+      }
 
       function onWindowResize() {
         windowHalfX = window.innerWidth / 2,
@@ -134,13 +149,10 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         mouseY = ( event.clientY - windowHalfY ) * 10;
       }
 
-      //
-
       function animate() {
         requestAnimationFrame( animate );
         render();
       }
-
 
       function render() {
 
@@ -151,14 +163,17 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         // camera.lookAt( scene.position );
 
         for ( var i = 0, il = spheres.length; i < il; i ++ ) {
-
           var sphere = spheres[ i ];
-
           sphere.position.x = 5000 * Math.cos( timer + i );
           sphere.position.y = 5000 * Math.sin( timer + i * 1.1 );
 
         }
 
-        effect.render( scene, camera );
+        if(stereoStatus){
+          effect.render( scene, camera );
+        }
+        else {
+          renderer.render( scene, camera );
+        }
 
       }
