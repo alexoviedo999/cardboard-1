@@ -124,7 +124,7 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
         // element.addEventListener('click', fullscreen, false);
 
-        window.removeEventListener('deviceorientation', setOrientationControls, true);
+        // window.removeEventListener('deviceorientation', setOrientationControls, true);
       }
 
       function stereoToggle() {
