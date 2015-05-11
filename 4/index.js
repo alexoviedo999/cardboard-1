@@ -1,6 +1,6 @@
 if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-      var container, stereoStatus;
+      var container, stereoStatus, varControl, addVarControls;
 
       var camera, scene, renderer, effect, element;
 
@@ -36,7 +36,6 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         container.appendChild(stereoButton);
         stereoStatus = true;
 
-
         camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 100000 );
         camera.position.z = 3200;
 
@@ -51,14 +50,15 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         // ];
 
         var urls = [
-        '../images/TropicalSunnyDay/left.png',
-        '../images/TropicalSunnyDay/right.png',
-        '../images/TropicalSunnyDay/top.png',
-        '../images/TropicalSunnyDay/bottom.png',
-        '../images/TropicalSunnyDay/front.png',
-        '../images/TropicalSunnyDay/back.png'
-      ];
+          '../images/TropicalSunnyDay/left.png',
+          '../images/TropicalSunnyDay/right.png',
+          '../images/TropicalSunnyDay/top.png',
+          '../images/TropicalSunnyDay/bottom.png',
+          '../images/TropicalSunnyDay/front.png',
+          '../images/TropicalSunnyDay/back.png'
+        ];
 
+        // Spheres
         var geometry = new THREE.SphereGeometry( 100, 32, 16 );
         var textureCube = THREE.ImageUtils.loadTextureCube( urls, THREE.CubeRefractionMapping );
         var material = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureCube, refractionRatio: 0.95 } );
@@ -71,29 +71,25 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
           mesh.position.z = Math.random() * 10000 - 5000;
           mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 3 + 1;
           scene.add( mesh );
-
           spheres.push( mesh );
-
         }
 
-
-
-        var geometry = new THREE.BoxGeometry( 150, 150, 150, 1, 1, 1 );
+        // Cubes
+        var geometry = new THREE.BoxGeometry( 200, 200, 200, 1, 1, 1 );
         var textureCube = THREE.ImageUtils.loadTextureCube( urls, THREE.CubeRefractionMapping );
         var material = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureCube, refractionRatio: 0.95 } );
 
         for ( var i = 0; i < 200; i ++ ) {
-
-          var mesh = new THREE.Mesh( geometry, material );
-          mesh.position.x = Math.random() * 10000 - 5000;
-          mesh.position.y = Math.random() * 10000 - 5000;
-          mesh.position.z = Math.random() * 10000 - 5000;
-          mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 3 + 1;
-          scene.add( mesh );
-
-          cubes.push( mesh );
-
+          var cube = new THREE.Mesh( geometry, material );
+          cube.position.x = Math.random() * 10000 - 5000;
+          cube.position.y = Math.random() * 10000 - 5000;
+          cube.position.z = Math.random() * 10000 - 5000;
+          cube.scale.x = cube.scale.y = cube.scale.z = Math.random() * 3 + 1;
+          cube.name = 'cube';
+          scene.add( cube );
+          cubes.push( cube );
         }
+
 
         // Skybox
 
@@ -101,12 +97,10 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         shader.uniforms[ "tCube" ].value = textureCube;
 
         var material = new THREE.ShaderMaterial( {
-
           fragmentShader: shader.fragmentShader,
           vertexShader: shader.vertexShader,
           uniforms: shader.uniforms,
           side: THREE.BackSide
-
         } ),
 
         mesh = new THREE.Mesh( new THREE.BoxGeometry( 100000, 100000, 100000 ), material );
@@ -131,6 +125,22 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         controls.noZoom = true;
         controls.noPan = true;
 
+
+        //variable control object
+        varControl = new function() { 
+          this.rotationSpeed = 0.010; 
+          // this.scale = 1; 
+        }; 
+
+        addVarControls(varControl);
+
+        function addVarControls(controlObject) {
+          var gui = new dat.GUI();
+          gui.add(controlObject, 'rotationSpeed', -0.1, 0.1);
+          // gui.add(controlObject, 'scale', 0.01, 2);
+        }
+
+
         window.addEventListener('deviceorientation', setOrientationControls, true);
         window.addEventListener( 'resize', onWindowResize, false );
       }
@@ -145,8 +155,6 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         controls.update();
 
         // element.addEventListener('click', fullscreen, false);
-
-        // window.removeEventListener('deviceorientation', setOrientationControls, true);
       }
 
       function stereoToggle() {
@@ -182,10 +190,6 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
         var timer = 0.0001 * Date.now();
 
-        // camera.position.x += ( mouseX - camera.position.x ) * .05;
-        // camera.position.y += ( - mouseY - camera.position.y ) * .05;
-        // camera.lookAt( scene.position );
-
         for ( var i = 0, il = spheres.length; i < il; i ++ ) {
           var sphere = spheres[ i ];
           sphere.position.x = 5000 * Math.cos( timer + i );
@@ -198,6 +202,8 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
           cube.position.x = 5000 * Math.cos( timer + i );
           cube.position.y = 5000 * Math.sin( timer + i * 1.1 );
 
+          cube.rotation.y += varControl.rotationSpeed;
+          // cube.scale.set(varControl.scale, varControl.scale, varControl.scale);
         }
 
         if(stereoStatus){
