@@ -155,7 +155,6 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         controls = new THREE.DeviceOrientationControls(camera, true);
         controls.connect();
         controls.update();
-
         // element.addEventListener('click', fullscreen, false);
       }
 
@@ -188,38 +187,26 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
           var sphere = spheres[ i ];
           sphere.position.x = 5000 * Math.cos( timer + i );
           sphere.position.y = 5000 * Math.sin( timer + i * 1.1 );
-
         }
 
         for ( var i = 0, il = cubes.length; i < il; i ++ ) {
           var cube = cubes[ i ];
           cube.position.x = 5000 * Math.cos( timer + i );
           cube.position.y = 5000 * Math.sin( timer + i * 1.1 );
-
-          // cube.rotation.y += varControl.rotationSpeed;
+          cube.rotation.y += varControl.rotationSpeed;
           // cube.scale.set(varControl.scale, varControl.scale, varControl.scale);
         }
-        
+
         camera.updateProjectionMatrix();
-        // controls.update();
         requestAnimationFrame( animate );
         render();
       }
 
       function render() {
-        
-
-        
-
         if(stereoStatus){
           effect.render( scene, camera );
         }
         else {
           renderer.render( scene, camera );
         }
-
-        
-
-        // requestAnimationFrame( render );
-
       }
