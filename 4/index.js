@@ -160,6 +160,8 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
       }
 
       function render(dt) {
+        camera.updateProjectionMatrix();
+        controls.update(dt);
 
         var timer = 0.0001 * Date.now();
 
@@ -175,8 +177,6 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
           sphere.position.y = 5000 * Math.sin( timer + i * 1.1 );
 
         }
-        camera.updateProjectionMatrix();
-        controls.update(dt);
 
         effect.render( scene, camera );
 
