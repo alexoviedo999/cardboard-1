@@ -14,7 +14,8 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
       var windowHalfX = window.innerWidth / 2;
       var windowHalfY = window.innerHeight / 2;
 
-      document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+      // document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+      window.addEventListener('deviceorientation', setOrientationControls, true);
 
       init();
       animate();
@@ -92,11 +93,6 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         effect.setSize( window.innerWidth, window.innerHeight );
 
         //
-
-        
-
-
-      window.addEventListener('deviceorientation', setOrientationControls, true);
 
 
 
