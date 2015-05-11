@@ -6,6 +6,8 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
       var mesh, lightMesh, geometry;
       var spheres = [];
+      var cubes = [];
+
 
       var directionalLight, pointLight;
 
@@ -25,6 +27,8 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         container = document.createElement( 'div' );
         container.id = 'container';
         document.body.appendChild( container );
+
+        // Stereo Button
         var stereoButton = document.createElement('button');
         stereoButton.id = 'steroButton';
         stereoButton.textContent = "VR Mode";
@@ -37,8 +41,6 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         camera.position.z = 3200;
 
         scene = new THREE.Scene();
-
-        var geometry = new THREE.SphereGeometry( 100, 32, 16 );
 
         // var path = "textures/cube/skybox/";
         var format = '.png';
@@ -57,10 +59,11 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         '../images/TropicalSunnyDay/back.png'
       ];
 
+        var geometry = new THREE.SphereGeometry( 100, 32, 16 );
         var textureCube = THREE.ImageUtils.loadTextureCube( urls, THREE.CubeRefractionMapping );
         var material = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureCube, refractionRatio: 0.95 } );
 
-        for ( var i = 0; i < 500; i ++ ) {
+        for ( var i = 0; i < 300; i ++ ) {
 
           var mesh = new THREE.Mesh( geometry, material );
           mesh.position.x = Math.random() * 10000 - 5000;
@@ -72,6 +75,35 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
           spheres.push( mesh );
 
         }
+
+
+
+        var geometry = new THREE.BoxGeometry( 150, 150, 150, 1, 1, 1 );
+        var textureCube = THREE.ImageUtils.loadTextureCube( urls, THREE.CubeRefractionMapping );
+        var material = new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureCube, refractionRatio: 0.95 } );
+
+        for ( var i = 0; i < 200; i ++ ) {
+
+          var mesh = new THREE.Mesh( geometry, material );
+          mesh.position.x = Math.random() * 10000 - 5000;
+          mesh.position.y = Math.random() * 10000 - 5000;
+          mesh.position.z = Math.random() * 10000 - 5000;
+          mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 3 + 1;
+          scene.add( mesh );
+
+          cubes.push( mesh );
+
+        }
+
+
+
+
+        // octahedron
+  // var shape = THREE.SceneUtils.createMultiMaterialObject( 
+  //   new THREE.OctahedronGeometry( 40, 0 ), 
+  //   multiMaterial );
+  // shape.position.set(0, 50, 100);
+  // scene.add( shape );
 
         // Skybox
 
@@ -168,6 +200,13 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
           var sphere = spheres[ i ];
           sphere.position.x = 5000 * Math.cos( timer + i );
           sphere.position.y = 5000 * Math.sin( timer + i * 1.1 );
+
+        }
+
+        for ( var i = 0, il = cubes.length; i < il; i ++ ) {
+          var cube = cubes[ i ];
+          cube.position.x = 5000 * Math.cos( timer + i );
+          cube.position.y = 5000 * Math.sin( timer + i * 1.1 );
 
         }
 
