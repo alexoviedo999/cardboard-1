@@ -106,6 +106,14 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         controls.noPan = true;
 
         
+      
+
+      window.addEventListener('deviceorientation', setOrientationControls, true);
+
+      window.addEventListener( 'resize', onWindowResize, false );
+
+      }
+
       function setOrientationControls( event ) {
         if (!event.alpha) {
           return;
@@ -118,12 +126,6 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         // element.addEventListener('click', fullscreen, false);
 
         // window.removeEventListener('deviceorientation', setOrientationControls, true);
-      }
-
-      window.addEventListener('deviceorientation', setOrientationControls, true);
-
-      window.addEventListener( 'resize', onWindowResize, false );
-
       }
 
       
