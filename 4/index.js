@@ -184,9 +184,9 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         render();
       }
 
-      function render(dt) {
+      function render() {
         camera.updateProjectionMatrix();
-        controls.update(dt);
+        controls.update();
 
         var timer = 0.0001 * Date.now();
 
