@@ -82,8 +82,6 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         mesh = new THREE.Mesh( new THREE.BoxGeometry( 100000, 100000, 100000 ), material );
         scene.add( mesh );
 
-        //
-
         renderer = new THREE.WebGLRenderer();
         element = renderer.domElement;
         // renderer.setPixelRatio( window.devicePixelRatio );
@@ -92,8 +90,6 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         effect = new THREE.StereoEffect( renderer );
         effect.eyeSeparation = 10;
         effect.setSize( window.innerWidth, window.innerHeight );
-
-        //
 
         controls = new THREE.OrbitControls(camera, element);
         controls.rotateUp(Math.PI / 4);
@@ -105,13 +101,8 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         controls.noZoom = true;
         controls.noPan = true;
 
-        
-      
-
-      window.addEventListener('deviceorientation', setOrientationControls, true);
-
-      window.addEventListener( 'resize', onWindowResize, false );
-
+        window.addEventListener('deviceorientation', setOrientationControls, true);
+        window.addEventListener( 'resize', onWindowResize, false );
       }
 
       function setOrientationControls( event ) {
@@ -131,32 +122,23 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
       
 
       function onWindowResize() {
-
         windowHalfX = window.innerWidth / 2,
         windowHalfY = window.innerHeight / 2,
-
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
-
         effect.setSize( window.innerWidth, window.innerHeight );
-
       }
 
       function onDocumentMouseMove( event ) {
-
         mouseX = ( event.clientX - windowHalfX ) * 10;
         mouseY = ( event.clientY - windowHalfY ) * 10;
-
       }
 
       //
 
       function animate() {
-
         requestAnimationFrame( animate );
-
         render();
-
       }
 
 
