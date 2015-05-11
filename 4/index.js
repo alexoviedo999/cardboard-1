@@ -20,7 +20,7 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
       
 
       init();
-      // animate();
+      animate();
 
       function init() {
 
@@ -181,14 +181,7 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         mouseY = ( event.clientY - windowHalfY ) * 10;
       }
 
-      // function animate() {
-      //   requestAnimationFrame( animate );
-      //   render();
-      // }
-
-      function render() {
-        
-
+      function animate() {
         var timer = 0.0001 * Date.now();
 
         for ( var i = 0, il = spheres.length; i < il; i ++ ) {
@@ -206,6 +199,17 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
           // cube.rotation.y += varControl.rotationSpeed;
           // cube.scale.set(varControl.scale, varControl.scale, varControl.scale);
         }
+        
+        camera.updateProjectionMatrix();
+        // controls.update();
+        requestAnimationFrame( animate );
+        render();
+      }
+
+      function render() {
+        
+
+        
 
         if(stereoStatus){
           effect.render( scene, camera );
@@ -214,9 +218,8 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
           renderer.render( scene, camera );
         }
 
-        camera.updateProjectionMatrix();
-        controls.update();
+        
 
-        requestAnimationFrame( render );
+        // requestAnimationFrame( render );
 
       }
