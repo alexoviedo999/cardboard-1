@@ -27,13 +27,6 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         container = document.createElement( 'div' );
         container.id = 'container';
         document.body.appendChild( container );
-
-        // Stereo Button
-        var stereoButton = document.createElement('button');
-        stereoButton.id = 'steroButton';
-        stereoButton.textContent = "VR Mode";
-        stereoButton.addEventListener('click', stereoToggle)
-        container.appendChild(stereoButton);
         stereoStatus = true;
 
         camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 100000 );
@@ -129,6 +122,14 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         //variable control object
         varControl = new function() { 
           this.rotationSpeed = 0.010; 
+          this.stereoToggle = function() {
+            stereoStatus = !stereoStatus;
+        windowHalfX = window.innerWidth,
+        windowHalfY = window.innerHeight,
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        effect.setSize( window.innerWidth, window.innerHeight );
+          }
           // this.scale = 1; 
         }; 
 
@@ -137,13 +138,12 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
         function addVarControls(controlObject) {
           var gui = new dat.GUI();
           gui.add(controlObject, 'rotationSpeed', -0.1, 0.1);
+          gui.add(controlObject, 'stereoToggle').name('VR Mode');
           // gui.add(controlObject, 'scale', 0.01, 2);
         }
 
-
         window.addEventListener('deviceorientation', setOrientationControls, true);
         window.addEventListener( 'resize', onWindowResize, false );
-
         render();
       }
 
