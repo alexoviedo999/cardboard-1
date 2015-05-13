@@ -124,11 +124,11 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
           this.rotationSpeed = 0.010; 
           this.stereoToggle = function() {
             stereoStatus = !stereoStatus;
-        windowHalfX = window.innerWidth,
-        windowHalfY = window.innerHeight,
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        effect.setSize( window.innerWidth, window.innerHeight );
+            windowHalfX = window.innerWidth,
+            windowHalfY = window.innerHeight,
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            effect.setSize( window.innerWidth, window.innerHeight );
           }
           // this.scale = 1; 
         }; 
