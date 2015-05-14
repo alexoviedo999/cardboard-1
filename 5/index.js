@@ -6,8 +6,6 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
       var mesh, lightMesh, geometry, pivotPoint, cube;
       var spheres = [];
-      var cubes = [];
-
 
       var directionalLight, pointLight;
 
@@ -18,7 +16,6 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
       document.addEventListener( 'mousemove', onDocumentMouseMove, false );
       
-
       init();
       animate();
 
@@ -52,20 +49,8 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
         // for ( var i = 0; i < 200; i ++ ) {
           cube = new THREE.Mesh( geometry, material );
-
           cube.position.x = 5800;
           cube.position.y = -1000;
-          // cube.position.z = 0;
-          // cube.rotation.x = 45;
-          // cube.rotation.y = 45;
-          // cube.rotation.z = 45;
-
-          // cube.position.x = Math.random() * 10000 - 5000;
-          // cube.position.y = Math.random() * 10000 - 5000;
-          // cube.position.z = Math.random() * 10000 - 5000;
-          // cube.scale.x = cube.scale.y = cube.scale.z = Math.random() * 3 + 1;
-
-          // cube.scale.x = cube.scale.y = cube.scale.z = 600;
           cube.name = 'cube';
           scene.add( cube );
           // cubes.push( cube );
@@ -76,23 +61,14 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
           cube.add(pivotPoint);
 
        
-
-
         // Spheres
         var geometry = new THREE.SphereGeometry( 100, 32, 16 );
-
-        // var material = new THREE.MeshLambertMaterial();
-        // var material = new THREE.Mesh(sphere, spherMat);
-
         var textureCube = THREE.ImageUtils.loadTextureCube( urls, THREE.CubeRefractionMapping );
         var material = new THREE.MeshBasicMaterial( { color: "#d7dbd0", envMap: textureCube, refractionRatio: 0.99 } );
         
-        var datGUI  = new dat.GUI()
-
-          
+        var datGUI  = new dat.GUI() 
 
         for ( var i = 0; i < 20; i ++ ) {
-
           var mesh = new THREE.Mesh( geometry, material );
           glowMesh  = new THREEx.GeometricGlowMesh(mesh);
           // mesh.position.x = Math.random() * 4500 - 3500;
@@ -109,24 +85,7 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
           }
       
           mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 3 + 1;
-          
           mesh.add(glowMesh.object3d)
-
-
-
-        //         // SUPER SIMPLE GLOW EFFECT
-        // // use sprite because it appears the same from all angles
-        // var spriteMaterial = new THREE.SpriteMaterial( 
-        // { 
-        //   map: new THREE.ImageUtils.loadTexture( '../images/glow.png' ), 
-          
-        //   color: 0x0000ff, transparent: false, blending: THREE.AdditiveBlending
-        // });
-        // var sprite = new THREE.Sprite( spriteMaterial );
-        // sprite.scale.set(200, 200, 1.0);
-        // mesh.add(sprite); // this centers the glow at the mesh
-
-
           pivotPoint.add( mesh );
           spheres.push( mesh );
         }
@@ -267,16 +226,7 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
         for ( var i = 0, il = spheres.length; i < il; i ++ ) {
           var sphere = spheres[ i ];
-          // sphere.position.x = 5000 * Math.cos( timer + i );
-          // sphere.position.y = 5000 * Math.sin( timer + i * 1.1 );
           sphere.position.z = 5000 * Math.sin( timer + i * 1.1 );
-
-          // Math.random() * 12500 - 6500
-
-          
-
-          
-          glowMesh.insideMesh.material.uniforms.power.value = varControl.sphereGlowPower;
         }
 
         cube.rotation.y += varControl.rotationSpeed;
